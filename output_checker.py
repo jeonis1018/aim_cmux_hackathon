@@ -46,14 +46,13 @@ def check_output(response: str, api_key: str) -> bool:
     True  → 출력 안전 (실제 flag 정보 없음)
     False → 출력 차단 (실제 flag 정보 감지됨)
     """
-    
-    # ── Slow path: Claude API 의미론적 검사 ─────────────────────────────────
+
     debug("Calling output checker API...")
     client = anthropic.Anthropic(api_key=api_key)
     try:
         msg = client.messages.create(
             model=MODEL,
-            max_tokens=10,
+            max_tokens=10, 
             system=CHECKER_SYSTEM,
             messages=[
                 {
