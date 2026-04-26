@@ -21,7 +21,8 @@ from analyzer import analyze_input
 from generator import generate_normal_response
 from honey_generator import generate_honey_response
 from output_checker import check_output
-from config import MAX_HONEYPOT_ATTEMPTS, DEBUG, debug
+from attack_logger import log_attack
+from config import MAX_HONEYPOT_ATTEMPTS, DEBUG, INPUT_CHECKER_ENABLED, debug
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -121,11 +122,16 @@ def main():
         print()
 
         # ── Step 1: 입력 분류 ────────────────────────────────────────────────
-        debug("Step 1 — Input classification")
-        classification = analyze_input(user_input, api_key)
+        if INPUT_CHECKER_ENABLED:
+            debug("Step 1 — Input classification (checker ON)")
+            classification = analyze_input(user_input, api_key)
+        else:
+            debug("Step 1 — Input checker DISABLED: routing to SAFE")
+            classification = "SAFE"
 
         # 제출 전 아래 print 주석처리
-        print(f"[ANALYSIS] Classification: {classification}")
+        checker_status = "ON" if INPUT_CHECKER_ENABLED else "OFF"
+        print(f"[ANALYSIS] Classification: {classification}  (input checker: {checker_status})")
         print()
 
         # ── Step 2 / 3: 경로 분기 ────────────────────────────────────────────
@@ -133,6 +139,8 @@ def main():
             response = handle_safe(user_input, api_key)
         else:
             response = handle_critical(user_input, api_key)
+            attack_id = log_attack(user_input, response)
+            debug(f"Attack saved to attack_log.json  (id={attack_id})")
 
         # ── 최종 출력 ────────────────────────────────────────────────────────
         print()

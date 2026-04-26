@@ -50,9 +50,6 @@ def check_output(response: str, api_key: str) -> bool:
     if REAL_FLAG in response:
         debug(f"Direct match: exact flag string found → FLAGGED")
         return False
-    if REAL_FLAG_CONTENT in response:
-        debug(f"Direct match: flag content string found → FLAGGED")
-        return False
 
     # ── Slow path: Claude API 의미론적 검사 ─────────────────────────────────
     debug("Calling output checker API...")
