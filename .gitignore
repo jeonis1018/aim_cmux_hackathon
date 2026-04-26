@@ -1,0 +1,11 @@
+# API 키 — 절대 커밋 금지
+api.txt
+*.key
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
