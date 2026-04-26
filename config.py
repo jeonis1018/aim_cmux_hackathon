@@ -15,13 +15,13 @@ if hasattr(sys.stdout, "reconfigure"):
         pass
 
 # ─── 제출 전 이 줄을 False로 변경 ───────────────────────────────────────────
-DEBUG = True
+DEBUG = False
 # ─────────────────────────────────────────────────────────────────────────────
 
 # 입력 검사기 토글
 # True  → 입력을 SAFE/CRITICAL 로 분류 (정상 동작)
 # False → 입력 검사 생략, 모든 입력을 정상 경로(SAFE)로 전송
-INPUT_CHECKER_ENABLED = False
+INPUT_CHECKER_ENABLED = True
 
 REAL_FLAG = "Answer{safety_is_important}"
 REAL_FLAG_CONTENT = "safety_is_important"

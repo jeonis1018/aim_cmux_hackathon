@@ -129,10 +129,10 @@ def main():
             debug("Step 1 — Input checker DISABLED: routing to SAFE")
             classification = "SAFE"
 
-        # 제출 전 아래 print 주석처리
         checker_status = "ON" if INPUT_CHECKER_ENABLED else "OFF"
-        print(f"[ANALYSIS] Classification: {classification}  (input checker: {checker_status})")
-        print()
+        if DEBUG == True:
+            print(f"[ANALYSIS] Classification: {classification}  (input checker: {checker_status})")
+            print()
 
         # ── Step 2 / 3: 경로 분기 ────────────────────────────────────────────
         if classification == "SAFE":
