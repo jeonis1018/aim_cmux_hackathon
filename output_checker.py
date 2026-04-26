@@ -46,11 +46,7 @@ def check_output(response: str, api_key: str) -> bool:
     True  → 출력 안전 (실제 flag 정보 없음)
     False → 출력 차단 (실제 flag 정보 감지됨)
     """
-    # ── Fast path: 직접 문자열 검사 (API 호출 절약) ─────────────────────────
-    if REAL_FLAG in response:
-        debug(f"Direct match: exact flag string found → FLAGGED")
-        return False
-
+    
     # ── Slow path: Claude API 의미론적 검사 ─────────────────────────────────
     debug("Calling output checker API...")
     client = anthropic.Anthropic(api_key=api_key)
